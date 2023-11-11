@@ -1,0 +1,31 @@
+header {
+    background-color: rgb(3, 1, 54);
+    color: aquamarine;
+    padding: 8px;
+    text-align: center;
+    text-shadow: 2px 2px antiquewhite;
+}
+
+.nav {
+    justify-content: center;
+    background-color: aqua;
+    font-weight: 700;
+}
+.list-nav {
+    display: flex;
+    list-style: none;
+}
+.nav-item {
+    padding: 6px;
+}
+.m1 {
+    color: black;
+    font-size: 2.4ch;
+    padding: 3px;
+}
+.csearch {
+    margin: auto;
+    width: 35%;
+    padding: 10px;
+}
+
