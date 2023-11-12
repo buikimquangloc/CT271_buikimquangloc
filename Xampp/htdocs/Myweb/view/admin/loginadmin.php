@@ -12,7 +12,7 @@
         
         if(mysqli_num_rows($result) == 1) {
           $_SESSION['username'] = $username;
-            header("Location: manager.php");
+            header("Location: pro.php");
         } else {
             $mess = "Bạn  nhập sai tên hoặc mật khẩu!!!";
             echo "<script>alert('$mess');</script>";

@@ -1,11 +1,36 @@
 <?php
 
+    include 'connect.php';
     session_start();
 
     if (!isset($_SESSION['username'])) {
         header('location:loginadmin.php');
     }
 
+
+    if(isset($_POST['sub'])) {
+
+        $MaSP = $_POST['MaSP'];
+        $TenSP = $_POST['TenSP'];
+
+        $image = $_FILES['image'];
+        // $image_tam = $_FILES['image']['tam_TenSP'];
+
+        $gia = $_POST['gia'];
+        $thongtin = $_POST['thongtin'];
+        $soluong = $_POST['soluong'];
+
+        $sql =  "INSERT INTO product (MaSP, TenSP, image, gia, thongtin, soluong) 
+        VALUES ('$MaSP', '$TenSP', '$image', '$gia', '$thongtin','$soluong')";
+
+        $query = mysqli_query($conn, $sql);
+
+        $image_tam = $_FILES['image']['tam_name'];
+
+        move_uploaded_file($image_tam, 'img/'.$image);
+
+        header('location: pro.php');
+    }
 ?>
 
 
@@ -100,56 +125,54 @@
         </div>
     
         <div class="row">
-            <div class="col-3 m-3">
+            <div class="col-2 m-2">
                     <h3>Danh mục</h3>
                     <ul style=" list-style: none;">
-                        <li><a href="addpro.php">Thêm sản phẩm</a></li>
+                        <li><a href="">Thêm sản phẩm</a></li>
                         <li><a href="editpro.php">Chỉnh sửa sản phẩm</a></li>
-                        <li><a href="">Xem sản phẩm</a></li>
+                        <li><a href="pro.php">Xem sản phẩm</a></li>
                         <li><a href="thongke.php">Thống kê số lượng người dùng</a></li>
                     </ul>
             </div>
             
-            <div class="row col-8">
-                <div class="add-vehicle-form">
-                    <h3>Thêm xe máy mới</h3>
-                    <form >
-                        <input type="text" id="vehicle-name" placeholder="Tên xe máy" required>
-                        <input type="text" id="vehicle-info" placeholder="Hãng xe" required>
-                        <input type="text" id="vehicle-info" placeholder="Giá" required>
-                        <input type="text" id="vehicle-info" placeholder="Số lượng" required>
-                        <input type="text" id="vehicle-info" placeholder="Thông tin về xe máy" required>
-
-                        <input type="submit" value="Thêm">
-                    </form>
+            <div class="row col-9 m-2">
+               <div class="container-fluid">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Thêm sản phẩm</h2>
+                        </div>
+                        <div class="card-body">
+                            <form action="" method="post" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <label for="">Mã sản phẩm</label>
+                                    <input type="text" name="MaSP" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Tên sản phẩm</label>
+                                    <input type="text" name="TenSP" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Ảnh sản phẩm</label> <br>
+                                    <input type="file" name="image" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Giá sản phẩm</label>
+                                    <input type="number" name="gia" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Thông tin sản phẩm</label>
+                                    <input type="text" name="thongtin" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Số lượng sản phẩm</label>
+                                    <input type="number" name="soluong" class="form-control">
+                                </div>
+                                <br>
+                                <button name="sub" class="btn btn-primary text-dark" type="submit">Thêm sản phẩm</button>
+                            </form>
+                        </div>
                     </div>
-                    <h2 class="title">Danh sách xe máy</h2>
-
-                    <div class="vehicle-list">
-                    <div class="vehicle-card">
-                        <img src="path_to_image1.jpg" alt="Xe máy 1">
-                        <h3>Xe máy 1</h3>
-                        <p>Thông tin về xe máy 1</p>
-                        <button >Chỉnh sửa</button>
-                        <button >Xóa</button>
-                    </div>
-
-                    <div class="vehicle-card">
-                        <img src="path_to_image2.jpg" alt="Xe máy 2">
-                        <h3>Xe máy 2</h3>
-                        <p>Thông tin về xe máy 2</p>
-                        <button >Chỉnh sửa</button>
-                        <button >Xóa</button>
-                    </div>
-
-                    <div class="vehicle-card">
-                        <img src="path_to_image3.jpg" alt="Xe máy 3">
-                        <h3>Xe máy 3</h3>
-                        <p>Thông tin về xe máy 3</p>
-                        <button >Chỉnh sửa</button>
-                        <button ">Xóa</button>
-                    </div>
-                </div>                            
+               </div>
             </div>
         </div>
         

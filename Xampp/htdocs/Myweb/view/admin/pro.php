@@ -1,11 +1,13 @@
 <?php
 
+    include 'connect.php';
     session_start();
 
     if (!isset($_SESSION['username'])) {
         header('location:loginadmin.php');
     }
-
+    $sql = "SELECT * FROM product";
+    $query = mysqli_query($conn,$sql);
 ?>
 
 
@@ -100,7 +102,7 @@
         </div>
     
         <div class="row">
-            <div class="col-3 m-3">
+            <div class="col-2 m-2">
                     <h3>Danh mục</h3>
                     <ul style=" list-style: none;">
                         <li><a href="addpro.php">Thêm sản phẩm</a></li>
@@ -110,17 +112,58 @@
                     </ul>
             </div>
             
-            <div class="row col-8">
-               <?php
+            <div class="row col-9 m-2">
+               <div class="container-fluid">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Danh sách sản phẩm</h2>
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead class="thead-dark ">
+                                    <tr class="bg-dark text-white">
+                                        <th></th>
+                                        <th>Mã sản phẩm</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Ảnh sản phẩm</th>
+                                        <th>Giá sản phẩm</th>
+                                        <th>Số lượng sản phẩm</th>
+                                        <th>Thông tin sản phẩm</th>
+                                        <th>Sửa</th>
+                                        <th>Xóa</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $i = 1;
+                                    while($row = mysqli_fetch_assoc($query)) { ?>
+                                        <td><?php echo $i++;?></td>
+                                        <td><?php echo $row['MaSP'];?></td>
+                                        <td><?php echo $row['TenSP'];?></td>
+                                        <td>
+                                            <img style="width: 100px" src="/Myweb/view/img/"<?php echo $row['image'];?>" alt="">
 
+                                        </td>
+                                        <td><?php echo $row['gia'];?></td>
+                                        <td><?php echo $row['soluong'];?></td>
+                                        <td><?php echo $row['thongtin'];?></td>
+                                        <td><a href="editpro.php"> <?php $row['MaSP'] ?>Sửa</a></td>
+                                        <td><a onclick="return Xoa('<?php echo $row['TenSP']?>')" href="deletepro.php"> <?php $row['MaSP'] ?>Xóa</a></td>
+                                    </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 
-
-               ?>
+               </div>
             </div>
-        </div>
-        
+        </div>        
     </div>
-
-    
+    <script>
+        function Xoa(TenSP) {
+            return confirm("Bạn muốn xóa" + TenSP + "?");
+        }
+    </script>
 </body>
 </html>
